@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ביטוח לאומי — שירותים ומידע ממשלתי במקום אחד</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Official Bituach Leumi Palette (live-extracted from btl.gov.il) mapped onto LifeSG 1:1 design tokens */
+      --btl-navy: #0C3058;
+      --btl-primary: #005D93;
+      --btl-link: #0368B0;
+      --btl-action: #0068F5;
+      --btl-sky: #4AAEE9;
+      --btl-cream: #F6F5F1;
+      --btl-amber-soft: #FFECBD;
+      --btl-badge-bg: #E8F0FE;
+      --btl-badge-border: #CFE1FE;
+
+      /* Exact LifeSG neutral & structural tokens */
+      --masthead-bg: #F7F7F7;
+      --footer-bg: #F9F9F9;
+      --text-primary: #282828;
+      --text-body: #393939;
+      --text-masthead: #1A1A1A;
+      --border-hairline: #DDE1E2;
+      --card-shadow: 0px 2px 4px 0px rgba(104, 104, 104, 0.24);
+      --header-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10);
+      --white: #FFFFFF;
+      --container-max: 1184px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Heebo', 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-primary);
+      background: var(--white);
+      font-size: 16px;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ==================== 1. SGDS-MASTHEAD (EXACT 28px) ==================== */
+    .sgds-masthead {
+      background: var(--masthead-bg);
+      color: var(--text-masthead);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      position: relative;
+      z-index: 120;
+    }
+    .masthead-bar {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 48px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .masthead-crest {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .masthead-text {
+      font-size: 12.5px;
+      line-height: 20px;
+      color: var(--text-masthead);
+    }
+    .masthead-identify-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      margin-right: 4px;
+      font-family: inherit;
+      font-size: 12.5px;
+      line-height: 20px;
+      color: var(--btl-link);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .masthead-identify-btn svg {
+      transition: transform 0.2s ease;
+    }
+    .masthead-identify-btn[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+    .masthead-drawer {
+      display: none;
+      background: #EFEFEF;
+      border-top: 1px solid var(--border-hairline);
+      padding: 20px 0;
+    }
+    .masthead-drawer.open { display: block; }
+    .masthead-drawer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px;
+    }
+    .masthead-col {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13.5px;
+      line-height: 20px;
+      color: var(--text-primary);
+    }
+
+    /* ==================== 2. HEADER / NAVBAR (EXACT 96px + SHADOW) ==================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 110;
+      background: var(--white);
+      box-shadow: var(--header-shadow);
+      height: 96px;
+    }
+    .site-nav {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 48px;
+      height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      cursor: pointer;
+      height: 32px;
+      min-width: 128px;
+    }
+    .brand-wordmark {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 32px;
+      letter-spacing: -0.6px;
+      color: var(--btl-navy);
+      display: inline-flex;
+      align-items: baseline;
+    }
+    .brand-wordmark .accent {
+      color: var(--btl-link);
+    }
+    .nav-cluster {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      height: 96px;
+    }
+    .nav-item-wrap {
+      position: relative;
+      height: 96px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-link {
+      background: none;
+      border: none;
+      height: 96px;
+      padding: 0;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.144px;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .nav-link:hover { color: var(--btl-link); }
+    .nav-link.active {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 4px;
+      background: var(--btl-link);
+    }
+    .nav-chevron {
+      width: 16px;
+      height: 16px;
+      color: var(--text-primary);
+      transition: transform 0.18s ease;
+    }
+    .nav-link[aria-expanded="true"] .nav-chevron {
+      transform: rotate(180deg);
+    }
+    .nav-search-btn {
+      background: none;
+      border: none;
+      width: 24px;
+      height: 96px;
+      padding: 0;
+      cursor: pointer;
+      color: var(--btl-link);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-search-btn:hover { color: var(--btl-navy); }
+    /* Exact LifeSG "Download the app" outlined button: h:40px, pad:7px 16px, border:1px solid #DDE1E2, br:4px */
+    .btn-header-cta {
+      height: 40px;
+      padding: 7px 16px;
+      background: var(--white);
+      color: var(--btl-link);
+      border: 1px solid var(--border-hairline);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      letter-spacing: 0.144px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s ease, border-color 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-header-cta:hover {
+      background: #F4F9FD;
+      border-color: var(--btl-link);
+    }
+
+    /* Dropdown menus for "Life moments" & "Topics" (LifeSG 1:1 clean dropdown) */
+    .nav-dropdown {
+      display: none;
+      position: absolute;
+      top: 96px;
+      right: 0;
+      min-width: 290px;
+      background: var(--white);
+      border: 1px solid var(--border-hairline);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.10);
+      padding: 12px 0;
+      z-index: 150;
+    }
+    .nav-dropdown.open { display: block; }
+    .nav-dropdown-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px 20px;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 22px;
+      color: var(--text-primary);
+      text-align: right;
+      cursor: pointer;
+    }
+    .nav-dropdown-item:hover {
+      background: #F4F9FD;
+      color: var(--btl-link);
+    }
+
+    /* ==================== 3. CENTERED HERO SECTION (EXACT 582px) ==================== */
+    .hero-section {
+      position: relative;
+      height: 582px;
+      width: 100%;
+      /* Exact 165.09deg soft airy wash re-tinted to BTL palette (cream #F6F5F1 + sky #4AAEE9 + warm amber #FFECBD) */
+      background-image: linear-gradient(
+        165.09deg,
+        rgba(235, 245, 252, 0.42) 0%,
+        rgba(246, 245, 241, 0.78) 55.3%,
+        rgba(255, 236, 189, 0.38) 81.01%,
+        rgba(235, 245, 252, 0.55) 100%
+      );
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 860px;
+      padding: 64px 24px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    /* Exact LifeSG H1: max-w 640px, 40px, fw 700, lh 48px, ls -0.32px, mb 32px */
+    .hero-h1 {
+      max-width: 640px;
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 48px;
+      letter-spacing: -0.32px;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+    }
+    /* Exact LifeSG Search Bar: 640px total (496px input + 144px button), h 64px, br 8px */
+    .hero-search-form {
+      width: 100%;
+      max-width: 640px;
+      height: 64px;
+      display: flex;
+      align-items: stretch;
+      background: var(--white);
+      border: 1px solid var(--border-hairline);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(12, 48, 88, 0.04);
+    }
+    .hero-search-form:focus-within {
+      border-color: var(--btl-link);
+      box-shadow: 0 0 0 3px rgba(3, 104, 176, 0.14);
+    }
+    .hero-search-input {
+      flex: 1;
+      height: 62px;
+      border: none;
+      outline: none;
+      background: var(--white);
+      padding: 16px 24px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+    .hero-search-input::placeholder { color: #767676; }
+    /* Exact LifeSG Search Button: w 144px, h 64px, fs 22px, fw 600, lh 26px, pad 0 24px */
+    .hero-search-btn {
+      width: 144px;
+      height: 64px;
+      flex-shrink: 0;
+      border: none;
+      background: var(--btl-link);
+      color: var(--white);
+      font-family: inherit;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 26px;
+      padding: 0 24px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 8px 0 0 8px;
+      transition: background 0.15s ease;
+    }
+    .hero-search-btn:hover { background: var(--btl-primary); }
+
+    /* Exact LifeSG Quick Chips: h 42px, pad 8px 16px, br 8px, border 1px solid #DDE1E2, fs 16px fw 600 */
+    .hero-chips {
+      margin-top: 24px;
+      max-width: 780px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+    .hero-chip {
+      height: 42px;
+      padding: 8px 16px;
+      background: var(--white);
+      border: 1px solid var(--border-hairline);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      letter-spacing: 0.144px;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .hero-chip:hover {
+      border-color: var(--btl-link);
+      background: #F8FBFE;
+    }
+    /* Exact LifeSG "NEW" Badge inside Chip #1: h 20px, pad 0 4px, br 4px, bg #E8F0FE, border #CFE1FE, fs 12px fw 600 */
+    .chip-new-badge {
+      height: 20px;
+      padding: 0 5px;
+      border-radius: 4px;
+      background: var(--btl-badge-bg);
+      border: 1px solid var(--btl-badge-border);
+      color: var(--btl-link);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 18px;
+      letter-spacing: 0.128px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    /* Full-width Edge-to-Edge Hero Bottom Illustration Strip (1:1 LifeSG 3-layer silhouette) */
+    .hero-art-strip {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 198px;
+      pointer-events: none;
+      z-index: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .hero-art-strip svg {
+      width: 100%;
+      min-width: 1280px;
+      height: 198px;
+      display: block;
+    }
+
+    /* ==================== SHARED CONTENT SECTION (1184px) ==================== */
+    .page-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 48px;
+    }
+    /* Exact LifeSG H2: 26px, fw 700, lh 36px, #282828 */
+    .sec-h2 {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 36px;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    /* Exact LifeSG section subtitle: 18px, fw 400, mt 8px */
+    .sec-sub {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--text-primary);
+      margin-top: 8px;
+      margin-bottom: 24px;
+    }
+
+    /* ==================== 4. POPULAR SECTION (EXACT 3-COL, 9 ITEMS, BORDERLESS) ==================== */
+    .popular-section {
+      height: 367px;
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+    .popular-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px 32px;
+    }
+    .popular-item {
+      background: none;
+      border: none;
+      padding: 16px 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      text-align: right;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 26px;
+      color: var(--btl-link);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .popular-item:hover {
+      color: var(--btl-navy);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .popular-item svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: var(--btl-link);
+      transition: transform 0.15s ease;
+    }
+    .popular-item:hover svg { transform: translateX(-3px); }
+
+    /* ==================== 5. LIFE MOMENTS SECTION (EXACT 2 WIDE CARDS, 240px TALL, 16px RADIUS) ==================== */
+    .moments-section {
+      min-height: 397px;
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+    .moments-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+    .moment-card {
+      min-height: 240px;
+      background: var(--white);
+      border: 1px solid var(--border-hairline);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      cursor: pointer;
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-decoration: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+    .moment-card:hover {
+      border-color: var(--btl-link);
+      box-shadow: 0px 6px 14px rgba(12, 48, 88, 0.12);
+      transform: translateY(-2px);
+    }
+    .moment-icon-svg {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+    /* Exact LifeSG Moment H5: 22px, fw 600, lh 28px, mt 24px, #282828 */
+    .moment-h5 {
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 28px;
+      color: var(--text-primary);
+      margin-top: 24px;
+    }
+    /* Exact LifeSG Moment P: 18px, fw 400, lh 26px, mt 8px, #393939 */
+    .moment-p {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--text-body);
+      margin-top: 8px;
+    }
+
+    /* ==================== 6. TOPICS SECTION (EXACT 3-COL, 10 ITEMS, HAIRLINE DIVIDERS ONLY) ==================== */
+    .topics-section {
+      min-height: 650px;
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0px 32px;
+    }
+    .topic-item {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border-hairline);
+      border-radius: 0;
+      padding: 16px 0 16px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      text-align: right;
+      cursor: pointer;
+      font-family: inherit;
+      width: 100%;
+      transition: background 0.15s ease;
+    }
+    /* Exact LifeSG rule: ONLY top 3 items have border-top: 1px solid #DDE1E2 */
+    .topic-item:nth-child(-n+3) {
+      border-top: 1px solid var(--border-hairline);
+    }
+    .topic-item:hover .topic-h5 {
+      color: var(--btl-navy);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .topic-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    /* Exact LifeSG Topic H5: 22px, fw 600, lh 28px, link blue */
+    .topic-h5 {
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 28px;
+      color: var(--btl-link);
+    }
+    /* Exact LifeSG Topic P: 18px, fw 400, lh 26px, #393939, 2-line clamp */
+    .topic-p {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--text-body);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .topic-item svg {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      color: var(--btl-link);
+      transition: transform 0.15s ease;
+    }
+    .topic-item:hover svg { transform: translateX(-3px); }
+
+    /* ==================== 7. PRE-FOOTER FULL-WIDTH ILLUSTRATION (EXACT 129px) ==================== */
+    .prefooter-art {
+      width: 100%;
+      height: 129px;
+      margin-top: 24px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .prefooter-art svg {
+      width: 100%;
+      min-width: 1280px;
+      height: 129px;
+      display: block;
+    }
+
+    /* ==================== 8. FOOTER (EXACT 369px, #F9F9F9, 4-COLUMN + 64px LEGAL BAR) ==================== */
+    .site-footer {
+      background: var(--footer-bg);
+      color: var(--text-primary);
+    }
+    .footer-top {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 64px 48px;
+      min-height: 304px;
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr 0.95fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .footer-brand-block {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .footer-stacked-logo {
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.05;
+      color: var(--btl-navy);
+      width: 68px;
+    }
+    .footer-stacked-logo span { color: var(--btl-link); display: block; }
+    .footer-vdivider {
+      width: 1px;
+      height: 54px;
+      background: var(--border-hairline);
+    }
+    .footer-powered {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: #686868;
+    }
+    .footer-powered-agency {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--btl-navy);
+    }
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .footer-link {
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.144px;
+      color: var(--text-primary);
+      text-align: right;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .footer-link:hover {
+      color: var(--btl-link);
+      text-decoration: underline;
+    }
+    .footer-app-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+    .store-badges {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .store-badge {
+      width: 200px;
+      height: 60px;
+      border-radius: 8px;
+      background: #000000;
+      color: #FFFFFF;
+      border: 1px solid #333;
+      padding: 8px 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      direction: ltr;
+    }
+    .store-badge:hover { background: #1A1A1A; }
+    .store-badge-sub { font-size: 10px; line-height: 12px; opacity: 0.85; display: block; text-align: left; }
+    .store-badge-main { font-size: 18px; font-weight: 600; line-height: 22px; display: block; text-align: left; }
+
+    /* Exact LifeSG Footer Bottom Bar: h 64px, pad 20px 0, 12px lh 20px */
+    .footer-bottom-wrap {
+      border-top: 1px solid var(--border-hairline);
+    }
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 48px;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 20px;
+      letter-spacing: 0.128px;
+      color: var(--text-primary);
+    }
+    .footer-legal-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-legal-links a, .footer-legal-links button {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 12px;
+      line-height: 20px;
+      color: var(--text-primary);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .footer-legal-links a:hover, .footer-legal-links button:hover {
+      color: var(--btl-link);
+      text-decoration: underline;
+    }
+
+    /* ==================== 9. FLOATING CORNER WIDGET (1:1 LifeSG Bottom-Corner Circle) ==================== */
+    .floating-widget-btn {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--btl-navy);
+      color: var(--white);
+      border: 2px solid var(--white);
+      box-shadow: 0 4px 14px rgba(12, 48, 88, 0.28);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      z-index: 140;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+    .floating-widget-btn:hover {
+      transform: scale(1.06);
+      background: var(--btl-primary);
+    }
+
+    /* ==================== CLEAN SUB-VIEWS (PERSONAL AREA & 4-LAYER CLOUD SIMULATOR) ==================== */
+    .view-panel { display: none; }
+    .view-panel.active { display: block; }
+
+    .subview-hero {
+      background: var(--btl-cream);
+      border-bottom: 1px solid var(--border-hairline);
+      padding: 36px 0;
+    }
+    .subview-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+    .clean-card {
+      background: var(--white);
+      border: 1px solid var(--border-hairline);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+    }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+    .grid-5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+    .pill-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--btl-badge-bg);
+      color: var(--btl-link);
+      border: 1px solid var(--btl-badge-border);
+    }
+    .pill-status.ok { background: #E6F7EE; color: #14532D; border-color: #BBF7D0; }
+
+    /* Cloud Simulator Controls */
+    .chaos-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .chaos-btn {
+      height: 40px;
+      padding: 7px 14px;
+      border-radius: 4px;
+      border: 1px solid var(--border-hairline);
+      background: var(--white);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .chaos-btn:hover { border-color: var(--btl-link); color: var(--btl-link); }
+    .chaos-btn.active { background: var(--btl-link); color: var(--white); border-color: var(--btl-link); }
+
+    .ratio-bar {
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      display: flex;
+      background: #E2E8F0;
+      margin: 14px 0 8px;
+    }
+    .svc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #EEF1F3;
+      font-size: 14.5px;
+      gap: 10px;
+    }
+    .svc-row:last-child { border-bottom: none; }
+    .cloud-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      direction: ltr;
+      white-space: nowrap;
+    }
+    .tag-aws { background: #FFF4E5; color: #9A3412; border: 1px solid #FDBA74; }
+    .tag-gcp { background: #E8F0FE; color: #1D4ED8; border: 1px solid #BFDBFE; }
+    .tag-azure { background: #E0F2FE; color: #0369A1; border: 1px solid #7DD3FC; }
+
+    .live-terminal {
+      background: #10243C;
+      color: #E2E8F0;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      line-height: 1.7;
+      direction: ltr;
+      text-align: left;
+    }
+    .pipe-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .pipe-box {
+      border: 1px solid var(--border-hairline);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      font-size: 13px;
+      background: var(--footer-bg);
+      transition: all 0.25s;
+    }
+    .pipe-box.running { background: var(--btl-amber-soft); border-color: #D97706; font-weight: 600; }
+    .pipe-box.done { background: #E6F7EE; border-color: #16A34A; color: #14532D; font-weight: 600; }
+
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 15px;
+    }
+    .audit-table th, .audit-table td {
+      text-align: right;
+      padding: 12px;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+    .audit-table th { background: var(--footer-bg); font-weight: 600; font-size: 13.5px; color: var(--text-body); }
+
+    /* Clean Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(12, 48, 88, 0.42);
+      z-index: 200;
+      place-items: center;
+      padding: 24px;
+    }
+    .modal-backdrop.open { display: grid; }
+    .modal-box {
+      background: var(--white);
+      border: 1px solid var(--border-hairline);
+      border-radius: 16px;
+      max-width: 540px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.18);
+    }
+
+    @media (max-width: 980px) {
+      .masthead-bar, .site-nav, .page-section, .footer-top, .footer-bottom, .subview-inner { padding-left: 20px; padding-right: 20px; }
+      .popular-grid, .topics-grid, .footer-top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .moments-grid, .grid-2, .grid-5 { grid-template-columns: 1fr; }
+      .nav-cluster { gap: 16px; }
+    }
+    @media (max-width: 640px) {
+      .popular-grid, .topics-grid, .footer-top, .pipe-grid { grid-template-columns: 1fr; }
+      .hero-h1 { font-size: 30px; line-height: 38px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== 1. SGDS-MASTHEAD (28px EXACT) ==================== -->
+  <div class="sgds-masthead" id="btl-masthead">
+    <div class="masthead-bar">
+      <span class="masthead-crest" aria-hidden="true">
+        <!-- Official Israeli Menorah-style minimal crest icon in BTL Navy -->
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+          <path d="M10 2L16.5 5V10.5C16.5 14.3 13.7 17.4 10 18.5C6.3 17.4 3.5 14.3 3.5 10.5V5L10 2Z" fill="#005D93"/>
+          <path d="M10 5.5V14.5M7 8.5C7 10.5 8.3 11.8 10 11.8C11.7 11.8 13 10.5 13 8.5M8.2 14.5H11.8" stroke="#FFFFFF" stroke-width="1.35" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="masthead-text">אתר ממשלתי רשמי של המוסד לביטוח לאומי</span>
+      <button class="masthead-identify-btn" id="identifyBtn" aria-expanded="false">
+        <span>איך מזהים?</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+      </button>
+    </div>
+    <div class="masthead-drawer" id="identifyDrawer">
+      <div class="masthead-drawer-inner">
+        <div class="masthead-col">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#005D93" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+          <div><strong>כתובות אתרים ממשלתיות מסתיימות ב־gov.il</strong><br/>וודאו תמיד שהכתובת בדפדפן מסתיימת ב־<code>btl.gov.il</code> וחתומה ב־DNSSEC.</div>
+        </div>
+        <div class="masthead-col">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#005D93" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          <div><strong>חיבור מאובטח ומוצפן (HTTPS / TLS 1.3)</strong><br/>מופעל מתשתית נימבוס תל אביב (AWS il-central-1) מאחורי AWS Shield Advanced.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. HEADER / NAVBAR (96px EXACT) ==================== -->
+  <header class="site-header" id="btl-header">
+    <nav class="site-nav" aria-label="ניווט ראשי">
+      <a class="brand-logo" href="#home" onclick="event.preventDefault(); switchView('home');">
+        <span class="brand-wordmark">ביטוח<span class="accent">לאומי</span></span>
+      </a>
+
+      <div class="nav-cluster">
+        <div class="nav-item-wrap">
+          <a class="nav-link active" id="nav-home" href="#home" onclick="event.preventDefault(); switchView('home');">דף הבית</a>
+        </div>
+
+        <div class="nav-item-wrap">
+          <button class="nav-link" id="nav-moments-btn" aria-expanded="false" onclick="toggleDropdown('moments-dd', this)">
+            <span>רגעי חיים</span>
+            <svg class="nav-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="nav-dropdown" id="moments-dd">
+            <button class="nav-dropdown-item" onclick="closeDropdowns(); openServiceModal('כשנולד תינוק או תינוקת', 'מענק לידה אוטומטי, דמי לידה, קצבת ילדים ותוכנית חיסכון לכל ילד במקום אחד.')">כשנולד תינוק או תינוקת <span>‹</span></button>
+            <button class="nav-dropdown-item" onclick="closeDropdowns(); openServiceModal('שירות מילואים פעיל', 'תגמול מילואים אוטומטי בסנכרון צה״ל, מענקים ומעקב תשלום ישיר לחשבון.')">שירות מילואים פעיל <span>‹</span></button>
+            <button class="nav-dropdown-item" onclick="closeDropdowns(); openServiceModal('בין עבודות או פיטורים', 'תביעת דמי אבטלה, חישוב זכאות ותיאום מול שירות התעסוקה.')">בין עבודות או פיטורים <span>‹</span></button>
+            <button class="nav-dropdown-item" onclick="closeDropdowns(); openServiceModal('פרישה ואזרחים ותיקים', 'קצבת אזרח ותיק, גמלת סיעוד והשלמת הכנסה.')">פרישה ואזרחים ותיקים <span>‹</span></button>
+            <button class="nav-dropdown-item" onclick="closeDropdowns(); openServiceModal('אובדן בן משפחה', 'מענק פטירה, קצבת שאירים וליווי מנהלי ללא בירוקרטיה.')">אובדן בן משפחה <span>‹</span></button>
+          </div>
+        </div>
+
+        <div class="nav-item-wrap">
+          <button class="nav-link" id="nav-topics-btn" aria-expanded="false" onclick="toggleDropdown('topics-dd', this)">
+            <span>נושאים</span>
+            <svg class="nav-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="nav-dropdown" id="topics-dd">
+            <button class="nav-dropdown-item" onclick="closeDropdowns(); switchView('home', 'topics-section')">כל 10 הנושאים והזכויות <span>‹</span></button>
+            <button class="nav-dropdown-item" onclick="closeDropdowns(); openServiceModal('קצבאות ותמיכה כלכלית', 'אבטלה, הבטחת הכנסה, דמי לידה וקצבת ילדים.')">קצבאות ותמיכה כלכלית <span>‹</span></button>
+            <button class="nav-dropdown-item" onclick="closeDropdowns(); openServiceModal('נכות, בריאות וסיעוד', 'קצבת נכות כללית, פגיעה בעבודה ושיקום מקצועי.')">נכות, בריאות וסיעוד <span>‹</span></button>
+            <button class="nav-dropdown-item" onclick="closeDropdowns(); openServiceModal('מעסיקים ועצמאים', 'דיווח 102, מקדמות והחזרי מילואים למעסיק.')">מעסיקים ועצמאים <span>‹</span></button>
+            <button class="nav-dropdown-item" onclick="closeDropdowns(); switchView('cloud')">⚡ סימולטור ענן (4 שכבות) <span>‹</span></button>
+          </div>
+        </div>
+
+        <button class="nav-search-btn" aria-label="חיפוש" onclick="focusHeroSearch()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="11" cy="11" r="7.5"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+
+        <button class="btn-header-cta" id="header-cta-btn" onclick="switchView('personal')">כניסה לאזור האישי</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ==================== VIEW 1: 1:1 LIFESG HOMEPAGE IN BTL PALETTE ==================== -->
+  <main id="view-home" class="view-panel active">
+
+    <!-- 3. CENTERED HERO SECTION (EXACT 582px) -->
+    <div class="hero-section" id="btl-hero">
+      <div class="hero-content">
+        <h1 class="hero-h1">שירותי הביטוח הלאומי ומידע<br/>לאזרח במקום אחד</h1>
+
+        <form class="hero-search-form" onsubmit="event.preventDefault(); executeSearch();">
+          <input class="hero-search-input" id="heroSearchInput" type="text" placeholder="חיפוש בביטוח לאומי" oninput="filterHomepage(this.value)" />
+          <button class="hero-search-btn" type="submit">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7.5"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>חיפוש</span>
+          </button>
+        </form>
+
+        <div class="hero-chips">
+          <a class="hero-chip" href="#miluim" onclick="event.preventDefault(); openServiceModal('מענקי מילואים ומשפחה 2026', 'מענקי תגמול מילואים מורחבים וסנכרון אוטומטי מול צה״ל ישירות לחשבון הבנק.');">
+            <span>חבילת תמיכה למילואים</span>
+            <span class="chip-new-badge">חדש</span>
+          </a>
+          <a class="hero-chip" href="#chat" onclick="event.preventDefault(); openServiceModal('צ׳אט מאובטח עם נציג', 'שודרג מ־HTTP/1.0 חשוף ל־WebSockets מוצפן מאחורי AWS CloudFront ו־Shield Advanced.');">
+            <span>צ׳אט מאובטח</span>
+          </a>
+          <a class="hero-chip" href="#budget" onclick="event.preventDefault(); openServiceModal('עדכון קצבאות 2026', 'פירוט עדכוני קצבאות אבטלה, ילדים, נכות ואזרח ותיק לשנת 2026.');">
+            <span>עדכוני 2026</span>
+          </a>
+          <a class="hero-chip" href="#birth" onclick="event.preventDefault(); openServiceModal('מענק ודמי לידה', 'מענק לידה אוטומטי מבית החולים ומעקב חופשת לידה באזור האישי.');">
+            <span>מענק ודמי לידה</span>
+          </a>
+          <a class="hero-chip" href="#unemployment" onclick="event.preventDefault(); openServiceModal('תביעה לדמי אבטלה', 'חישוב זכאות מהיר, העלאת תלושי שכר ב־S3 מאובטח ומעקב יומי.');">
+            <span>דמי אבטלה וזכאות</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Full-Width Edge-to-Edge Editorial Skyline & Citizens Strip (1:1 LifeSG composition in BTL colors) -->
+      <div class="hero-art-strip" aria-hidden="true">
+        <svg viewBox="0 0 1440 198" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+          <!-- Soft distant clouds -->
+          <path d="M120 74h58a14 14 0 0 0-24-11 18 18 0 0 0-34 11z" fill="#FFFFFF" opacity="0.85"/>
+          <path d="M1210 66h68a15 15 0 0 0-26-12 20 20 0 0 0-42 12z" fill="#FFFFFF" opacity="0.85"/>
+          <!-- Distant Tel Aviv / Jerusalem skyline (soft BTL sky blue tones) -->
+          <g fill="#D7EBF8">
+            <rect x="420" y="92" width="38" height="90" rx="2"/>
+            <rect x="466" y="72" width="44" height="110" rx="2"/>
+            <polygon points="518,182 544,64 570,182"/>
+            <rect x="578" y="88" width="42" height="94" rx="2"/>
+            <rect x="820" y="78" width="48" height="104" rx="2"/>
+            <rect x="876" y="58" width="42" height="124" rx="2"/>
+            <rect x="926" y="94" width="52" height="88" rx="2"/>
+            <path d="M990 182 V112 Q1016 94 1042 112 V182 Z"/>
+          </g>
+          <!-- Soft curved civic domes / trees left & right (LifeSG rhythmic balance) -->
+          <path d="M148 182 C164 138 228 138 244 182 Z" fill="#C4E2F5"/>
+          <path d="M232 182 C246 146 296 146 310 182 Z" fill="#B2D9F2"/>
+          <g fill="#005D93" opacity="0.16">
+            <path d="M0 198 Q180 156 360 180 T720 176 T1080 182 T1440 166 V198 Z"/>
+          </g>
+          <g fill="#0368B0" opacity="0.22">
+            <path d="M0 198 Q260 174 520 188 T1040 184 T1440 178 V198 Z"/>
+          </g>
+          <!-- Right skyline towers (Azrieli / modern Israel silhouette in BTL blue) -->
+          <g fill="#5B9ED6">
+            <rect x="1152" y="106" width="24" height="78" rx="2"/>
+            <rect x="1182" y="96" width="24" height="88" rx="2"/>
+            <rect x="1212" y="104" width="24" height="80" rx="2"/>
+            <rect x="1146" y="96" width="96" height="8" rx="4" fill="#0368B0"/>
+          </g>
+          <!-- Center signpost + Bench + Citizen on Laptop (1:1 LifeSG focal center) -->
+          <g transform="translate(652, 74)">
+            <rect x="44" y="8" width="4" height="104" fill="#5A7D95"/>
+            <polygon points="48,18 96,18 104,26 96,34 48,34" fill="#4AAEE9"/>
+            <polygon points="44,38 4,38 -4,46 4,54 44,54" fill="#005D93"/>
+          </g>
+          <!-- Bench + Person with Laptop -->
+          <g transform="translate(686, 108)">
+            <rect x="0" y="42" width="112" height="10" rx="3" fill="#E6C37A"/>
+            <rect x="0" y="56" width="112" height="7" rx="2" fill="#D5AD5B"/>
+            <rect x="14" y="63" width="6" height="24" fill="#8C7343"/>
+            <rect x="92" y="63" width="6" height="24" fill="#8C7343"/>
+            <!-- Seated Citizen -->
+            <circle cx="62" cy="18" r="10" fill="#0C3058"/>
+            <path d="M48 56 C48 34 76 34 76 56 Z" fill="#FFFFFF" stroke="#0C3058" stroke-width="1.5"/>
+            <path d="M54 56 L78 56 L86 86 L74 86 L68 64 L54 64 Z" fill="#005D93"/>
+            <rect x="64" y="42" width="24" height="15" rx="2" fill="#0068F5"/>
+          </g>
+          <!-- Left: Parent & Child walking -->
+          <g transform="translate(454, 104)">
+            <circle cx="18" cy="12" r="9" fill="#0C3058"/>
+            <path d="M8 24 H28 L32 58 H4 Z" fill="#0368B0"/>
+            <line x1="12" y1="58" x2="8" y2="86" stroke="#0C3058" stroke-width="5" stroke-linecap="round"/>
+            <line x1="24" y1="58" x2="28" y2="86" stroke="#0C3058" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="56" cy="36" r="7" fill="#0C3058"/>
+            <path d="M48 45 H64 L66 68 H46 Z" fill="#4AAEE9"/>
+            <line x1="52" y1="68" x2="50" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+            <line x1="60" y1="68" x2="62" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+          </g>
+          <!-- Right: Senior couple walking -->
+          <g transform="translate(918, 106)">
+            <circle cx="18" cy="14" r="9" fill="#0C3058"/>
+            <rect x="8" y="25" width="20" height="36" rx="6" fill="#005D93"/>
+            <line x1="14" y1="61" x2="14" y2="84" stroke="#0C3058" stroke-width="5" stroke-linecap="round"/>
+            <line x1="22" y1="61" x2="22" y2="84" stroke="#0C3058" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="54" cy="16" r="9" fill="#64748B"/>
+            <rect x="43" y="27" width="22" height="34" rx="6" fill="#E6C37A"/>
+            <line x1="50" y1="61" x2="50" y2="84" stroke="#0C3058" stroke-width="5" stroke-linecap="round"/>
+            <line x1="58" y1="61" x2="58" y2="84" stroke="#0C3058" stroke-width="5" stroke-linecap="round"/>
+            <line x1="72" y1="42" x2="76" y2="84" stroke="#475569" stroke-width="2.8" stroke-linecap="round"/>
+          </g>
+          <!-- Minimal birds -->
+          <path d="M276 92 q8-6 14 0 q6-6 14 0" fill="none" stroke="#0368B0" stroke-width="2" stroke-linecap="round"/>
+          <path d="M1088 86 q6-5 10 0 q5-5 10 0" fill="none" stroke="#0368B0" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 4. POPULAR SECTION (EXACT 3-COL, 9 BORDERLESS LINKS) -->
+    <section class="page-section popular-section" id="popular-section">
+      <h2 class="sec-h2">פופולרי בביטוח לאומי</h2>
+      <p class="sec-sub">שירותים וכלים בשימוש שכיח בביטוח הלאומי.</p>
+      <div class="popular-grid" id="popularGrid">
+        <button class="popular-item" onclick="switchView('personal')">
+          <span>צפייה בדוח קצבאות ותשלומים</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+        </button>
+        <button class="popular-item" onclick="openServiceModal('רישום ומענק לידה', 'מענק הלידה מועבר ישירות לחשבון הבנק בסנכרון אוטומטי מול בית החולים.')">
+          <span>מענק לידה ורישום ילוד</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+        </button>
+        <button class="popular-item" onclick="openServiceModal('תגמול מילואים', 'הגשה ומעקב אוטומטי אחר תגמולי מילואים ומענקי משפחות מילואים.')">
+          <span>הגשת תביעה לתגמול מילואים</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+        </button>
+        <button class="popular-item" onclick="openServiceModal('ניהול דמי לידה וחופשת לידה', 'חלוקת חופשת לידה בין בני הזוג, חישוב דמי לידה והגשה מקוונת.')">
+          <span>ניהול דמי לידה וחופשת לידה משותפת</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+        </button>
+        <button class="popular-item" onclick="openServiceModal('הגשת תביעה לדמי אבטלה', 'בדיקת זכאות מיידית, חישוב סכום יומי וקישור דיגיטלי לשירות התעסוקה.')">
+          <span>הגשת תביעה לדמי אבטלה</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+        </button>
+        <button class="popular-item" onclick="switchView('personal', 'upload-card')">
+          <span>העלאת מסמכים רפואיים ותביעות (PDF)</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+        </button>
+        <button class="popular-item" onclick="openServiceModal('הפקת אישור תקופות ביטוח', 'הורדה מיידית של אישור מעמד ותקופות עבודה חתום דיגיטלית ב־PDF.')">
+          <span>אישור מעמד ותקופות ביטוח</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+        </button>
+        <button class="popular-item" onclick="openServiceModal('תשלום דמי ביטוח ומקדמות', 'תשלום מקוון, הקמת הוראת קבע והסדרי חוב ללא המתנה.')">
+          <span>תשלום דמי ביטוח ומקדמות</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+        </button>
+        <button class="popular-item" onclick="openServiceModal('זימון תור טלפוני או בסניף', 'קביעת פגישה דיגיטלית, שיחת וידאו או תור פרונטלי בסניף הקרוב אליך.')">
+          <span>זימון תור דיגיטלי או פגישה בסניף</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- 5. LIFE MOMENTS SECTION (EXACT 2 WIDE CARDS, 240px HEIGHT, 40px DUOTONE LINE SVG) -->
+    <section class="page-section moments-section" id="moments-section">
+      <h2 class="sec-h2">רגעי חיים</h2>
+      <p class="sec-sub">מידע ושירותים מותאמים לרגעי חיים ומצבים חשובים.</p>
+      <div class="moments-grid" id="momentsGrid">
+        <a class="moment-card" href="#moment-baby" onclick="event.preventDefault(); openServiceModal('כשנולד תינוק או תינוקת', 'מענק לידה אוטומטי, דמי לידה, קצבת ילדים, תוכנית חיסכון לכל ילד ומדריך צעד-אחר-צעד להורים טריים.');">
+          <!-- 40x40 thin-line duotone SVG (1:1 LifeSG baby bottle icon style in BTL blue) -->
+          <svg class="moment-icon-svg" viewBox="0 0 40 40" fill="none">
+            <rect x="14" y="13" width="12" height="21" rx="4" fill="#EBF5FC" stroke="#0368B0" stroke-width="1.8"/>
+            <path d="M16 13V10.5C16 9.4 16.9 8.5 18 8.5H22C23.1 8.5 24 9.4 24 10.5V13" stroke="#0368B0" stroke-width="1.8"/>
+            <path d="M18.5 8.5V6.5C18.5 5.7 19.2 5 20 5C20.8 5 21.5 5.7 21.5 6.5V8.5" stroke="#4AAEE9" stroke-width="1.8"/>
+            <line x1="17" y1="20" x2="21" y2="20" stroke="#4AAEE9" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="17" y1="25" x2="21" y2="25" stroke="#4AAEE9" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <h5 class="moment-h5">כשנולד תינוק או תינוקת</h5>
+          <p class="moment-p">מה צריך לעשות מיד לאחר הלידה, מענקים, דמי לידה ומשאבים נוספים התומכים בך ובתינוק.</p>
+        </a>
+
+        <a class="moment-card" href="#moment-miluim" onclick="event.preventDefault(); openServiceModal('שירות מילואים וזכויות למשפחה', 'תגמול מילואים אוטומטי, מענקים מיוחדים למשפחות משרתים, והחזרי שכר למעסיקים ועצמאים.');">
+          <!-- 40x40 thin-line duotone SVG (1:1 LifeSG lotus/shield minimal outline style in BTL blue) -->
+          <svg class="moment-icon-svg" viewBox="0 0 40 40" fill="none">
+            <path d="M20 6L31 11V20.5C31 27.2 26.3 32.6 20 35C13.7 32.6 9 27.2 9 20.5V11L20 6Z" fill="#EBF5FC" stroke="#0368B0" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M15.5 20.5L18.6 23.6L25 16.8" stroke="#4AAEE9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h5 class="moment-h5">שירות מילואים פעיל</h5>
+          <p class="moment-p">מדריך מלא לתגמולי מילואים, מענקי משפחה וסנכרון תשלומים ישירות מצה״ל לחשבון הבנק.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 6. TOPICS SECTION (EXACT 3-COL, 10 ITEMS, HAIRLINE DIVIDERS ONLY, ZERO CARD BG) -->
+    <section class="page-section topics-section" id="topics-section">
+      <h2 class="sec-h2">נושאים</h2>
+      <p class="sec-sub">עיון בשירותים ובמידע לפי קטגוריה.</p>
+      <div class="topics-grid" id="topicsGrid">
+        <button class="topic-item" onclick="openServiceModal('שירותי טיפול, סיעוד ונכות', 'גישה לקצבאות נכות כללית, גמלת סיעוד, בריאות הנפש ושירותי תמיכה למטפלים.')">
+          <div class="topic-copy">
+            <h5 class="topic-h5">נכות, סיעוד ושירותי תמיכה</h5>
+            <p class="topic-p">גישה לקצבאות נכות, סיעוד לקשישים, ניידות ושירותי תמיכה למשפחות מטפלות.</p>
+          </div>
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 5.5L8 11l5.5 5.5"/></svg>
+        </button>
+
+        <button class="topic-item" onclick="openServiceModal('פטירה ושאירים', 'מדריך להסדרת קצבת שאירים, מענק פטירה ותמיכה במשפחה לאחר אובדן יקיר.')">
+          <div class="topic-copy">
+            <h5 class="topic-h5">פטירה וקצבאות שאירים</h5>
+            <p class="topic-p">מדריך להליכים המנהליים ולקבלת תמיכה כלכלית בעת אובדן בן משפחה.</p>
+          </div>
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 5.5L8 11l5.5 5.5"/></svg>
+        </button>
+
+        <button class="topic-item" onclick="openServiceModal('שיקום מקצועי והשכלה', 'ליווי אקדמי, מימון לימודים והכשרה מקצועית לזכאי שיקום בביטוח הלאומי.')">
+          <div class="topic-copy">
+            <h5 class="topic-h5">שיקום מקצועי ולימודים</h5>
+            <p class="topic-p">מסלולי הכשרה מקצועית, מימון לימודים וליווי תעסוקתי מותאם אישית.</p>
+          </div>
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 5.5L8 11l5.5 5.5"/></svg>
+        </button>
+
+        <button class="topic-item" onclick="openServiceModal('משפחה, לידה והורות', 'קצבת ילדים, חיסכון לכל ילד, מענק לידה, דמי לידה ותמיכה בהורות.')">
+          <div class="topic-copy">
+            <h5 class="topic-h5">משפחה, לידה והורות</h5>
+            <p class="topic-p">שירותים ומענקים התומכים בהקמת משפחה, לידה, חיסכון לכל ילד ומזונות.</p>
+          </div>
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 5.5L8 11l5.5 5.5"/></svg>
+        </button>
+
+        <button class="topic-item" onclick="openServiceModal('תמיכה כלכלית והבטחת הכנסה', 'הבטחת הכנסה, השלמת הכנסה, מענק חימום והטבות במוסדות המדינה.')">
+          <div class="topic-copy">
+            <h5 class="topic-h5">תמיכה כלכלית וקצבאות</h5>
+            <p class="topic-p">בדיקת זכאות להבטחת הכנסה, קצבאות חודשיות והנחות בחשבונות שוטפים.</p>
+          </div>
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 5.5L8 11l5.5 5.5"/></svg>
+        </button>
+
+        <button class="topic-item" onclick="openServiceModal('בריאות, נפגעי עבודה ותאונות', 'דמי פגיעה בעבודה, ועדות רפואיות, דמי תאונה ושמירה על ביטוח בריאות.')">
+          <div class="topic-copy">
+            <h5 class="topic-h5">בריאות ונפגעי עבודה</h5>
+            <p class="topic-p">כיסוי ביטוח בריאות, דמי פגיעה בעבודה, תאונות אישיות וזימון לוועדות רפואיות.</p>
+          </div>
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 5.5L8 11l5.5 5.5"/></svg>
+        </button>
+
+        <button class="topic-item" onclick="openServiceModal('תושבות, עלייה ושהייה בחו״ל', 'שמירת זכויות ביטוח לאומי ובריאות בזמן רילוקיישן, עולים חדשים ותושבים חוזרים.')">
+          <div class="topic-copy">
+            <h5 class="topic-h5">תושבות, עולים ושהייה בחו״ל</h5>
+            <p class="topic-p">הסדרת מעמד תושב, תשלומים בזמן שהייה בחו״ל וזכויות תושב חוזר.</p>
+          </div>
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 5.5L8 11l5.5 5.5"/></svg>
+        </button>
+
+        <button class="topic-item" onclick="openServiceModal('פרישה ואזרחים ותיקים', 'תכנון גיל פרישה, קצבת אזרח ותיק, דחיית קצבה וזכויות נלוות.')">
+          <div class="topic-copy">
+            <h5 class="topic-h5">פרישה ואזרחים ותיקים</h5>
+            <p class="topic-p">מידע על גיל פרישה, חישוב קצבת אזרח ותיק והטבות לאזרחים ותיקים.</p>
+          </div>
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 5.5L8 11l5.5 5.5"/></svg>
+        </button>
+
+        <button class="topic-item" onclick="openServiceModal('שירות מילואים ונפגעי איבה', 'תגמולי מילואים, זכויות חיילים משוחררים ומסלול ירוק לנפגעי פעולות איבה.')">
+          <div class="topic-copy">
+            <h5 class="topic-h5">שירות מילואים ונפגעי איבה</h5>
+            <p class="topic-p">מידע על תגמולי מילואים, מענקי חירום ומסלול טיפול מהיר לנפגעי איבה.</p>
+          </div>
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 5.5L8 11l5.5 5.5"/></svg>
+        </button>
+
+        <button class="topic-item" onclick="openServiceModal('עבודה, אבטלה ומעסיקים', 'זכויות שכירים, דמי אבטלה, פשיטת רגל של מעסיק, עצמאים ודיווח טופס 102.')">
+          <div class="topic-copy">
+            <h5 class="topic-h5">עבודה, אבטלה ומעסיקים</h5>
+            <p class="topic-p">זכויות עובדים, דמי אבטלה, תיקי עצמאים ודיווחי מעסיקים חודשיים.</p>
+          </div>
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 5.5L8 11l5.5 5.5"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- 7. PRE-FOOTER FULL-WIDTH ILLUSTRATION STRIP (EXACT 129px, FLUSH ABOVE FOOTER) -->
+    <div class="prefooter-art" aria-hidden="true">
+      <svg viewBox="0 0 1440 129" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- Soft pastel horizon skyline -->
+        <g fill="#E6F1FA">
+          <rect x="60" y="54" width="44" height="60"/>
+          <rect x="116" y="38" width="38" height="76"/>
+          <rect x="460" y="46" width="52" height="68"/>
+          <rect x="524" y="28" width="42" height="86"/>
+          <rect x="860" y="44" width="48" height="70"/>
+          <rect x="1180" y="34" width="50" height="80"/>
+          <rect x="1240" y="52" width="42" height="62"/>
+        </g>
+        <!-- Soft ground wave -->
+        <path d="M0 116 Q360 98 720 114 T1440 108 V129 H0 Z" fill="#C9E2F5" opacity="0.65"/>
+        <!-- Diverse community characters (1:1 LifeSG pre-footer rhythm in BTL colors) -->
+        <!-- Group 1: Couple walking -->
+        <g transform="translate(88, 34)">
+          <circle cx="14" cy="14" r="8" fill="#0C3058"/><rect x="6" y="24" width="16" height="32" rx="6" fill="#005D93"/>
+          <line x1="11" y1="56" x2="9" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+          <line x1="18" y1="56" x2="21" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="46" cy="12" r="8" fill="#475569"/><rect x="37" y="22" width="18" height="34" rx="6" fill="#E6C37A"/>
+          <line x1="42" y1="56" x2="40" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+          <line x1="50" y1="56" x2="52" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <!-- Group 2: Family -->
+        <g transform="translate(360, 34)">
+          <circle cx="16" cy="14" r="8" fill="#0C3058"/><rect x="8" y="24" width="16" height="34" rx="6" fill="#0368B0"/>
+          <line x1="13" y1="58" x2="12" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+          <line x1="20" y1="58" x2="22" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="52" cy="10" r="8" fill="#0C3058"/><rect x="43" y="20" width="18" height="36" rx="6" fill="#4AAEE9"/>
+          <line x1="48" y1="56" x2="48" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+          <line x1="56" y1="56" x2="58" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <!-- Group 3: Cyclists -->
+        <g transform="translate(676, 46)">
+          <circle cx="14" cy="60" r="14" fill="none" stroke="#005D93" stroke-width="2.6"/>
+          <circle cx="54" cy="60" r="14" fill="none" stroke="#005D93" stroke-width="2.6"/>
+          <path d="M14 60 L32 42 L54 60 L34 60 Z" fill="none" stroke="#0368B0" stroke-width="2.4"/>
+          <circle cx="34" cy="16" r="8" fill="#0C3058"/>
+          <path d="M26 26 H42 L44 46 H26 Z" fill="#0068F5"/>
+        </g>
+        <!-- Group 4: Friends / Sports -->
+        <g transform="translate(1008, 34)">
+          <circle cx="24" cy="12" r="8" fill="#E6C37A"/>
+          <circle cx="24" cy="30" r="7" fill="#0C3058"/><rect x="16" y="39" width="16" height="24" rx="5" fill="#005D93"/>
+          <line x1="20" y1="63" x2="18" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+          <line x1="28" y1="63" x2="30" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="64" cy="24" r="7" fill="#0C3058"/><rect x="56" y="33" width="16" height="28" rx="5" fill="#4AAEE9"/>
+          <line x1="60" y1="61" x2="58" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+          <line x1="68" y1="61" x2="70" y2="86" stroke="#0C3058" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <!-- Group 5: Seated chat -->
+        <g transform="translate(1266, 46)">
+          <circle cx="22" cy="14" r="8" fill="#0C3058"/><rect x="14" y="24" width="16" height="28" rx="5" fill="#FFFFFF" stroke="#005D93" stroke-width="1.5"/>
+          <rect x="6" y="52" width="32" height="22" rx="3" fill="#E6C37A"/>
+          <circle cx="76" cy="14" r="8" fill="#0C3058"/><rect x="68" y="24" width="16" height="28" rx="5" fill="#0368B0"/>
+          <rect x="60" y="52" width="32" height="22" rx="3" fill="#005D93"/>
+        </g>
+      </svg>
+    </div>
+  </main>
+
+  <!-- ==================== VIEW 2: PERSONAL AREA (CLEAN LIFESG DESIGN LANGUAGE) ==================== -->
+  <main id="view-personal" class="view-panel">
+    <div class="subview-hero">
+      <div class="subview-inner" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+        <div>
+          <h1 class="sec-h2" style="font-size:32px;line-height:40px;">שלום חצב, האזור האישי שלך</h1>
+          <p style="font-size:16px;color:var(--text-body);margin-top:6px;">מופעל ב־AWS ECS Fargate (תל אביב) · זמינות נתונים 0.9ms דרך ElastiCache Valkey</p>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;">
+          <span class="pill-status ok">● מאומת gov.il + MFA</span>
+          <button class="btn-header-cta" onclick="switchView('home')">חזרה לדף הבית</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-section">
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div class="clean-card" style="background:linear-gradient(135deg,#0C3058,#005D93);color:#FFFFFF;border:none;">
+          <div style="font-size:15px;opacity:0.86;">התשלום הקרוב לחשבון הבנק שלך</div>
+          <div style="font-size:40px;font-weight:700;margin:8px 0;">₪ 6,840</div>
+          <div style="font-size:14px;opacity:0.9;display:flex;gap:16px;flex-wrap:wrap;">
+            <span>מועד הפקדה: 28/11/2026</span>
+            <span>בנק לאומי · סניף 739</span>
+            <span>תגמול מילואים מאושר</span>
+          </div>
+        </div>
+
+        <div class="clean-card">
+          <h3 style="font-size:20px;font-weight:600;margin-bottom:14px;">סטטוס תביעות פעילות</h3>
+          <div class="svc-row">
+            <div><strong>תביעת מילואים #94821</strong><div style="font-size:13.5px;color:var(--text-body);">סנכרון אוטומטי מצה״ל</div></div>
+            <span class="pill-status ok">אושר לתשלום</span>
+          </div>
+          <div class="svc-row">
+            <div><strong>אישור תקופות ביטוח</strong><div style="font-size:13.5px;color:var(--text-body);">חתום דיגיטלית ב־PDF</div></div>
+            <span class="pill-status">זמין להורדה</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive S3 Presigned -> Lambda -> SQS -> Direct Connect Uploader -->
+      <div class="clean-card" id="upload-card" style="margin-bottom:24px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h3 style="font-size:22px;font-weight:600;">העלאת מסמך ותביעה (צנרת AWS 3.3 בלייב)</h3>
+            <p style="font-size:15px;color:var(--text-body);margin-top:4px;">הדמיה חיה: S3 Presigned URL -> סריקת Lambda + GuardDuty -> תור SQS FIFO -> סנכרון Direct Connect לירושלים.</p>
+          </div>
+          <button class="btn-header-cta" style="background:var(--btl-link);color:#FFF;border-color:var(--btl-link);" onclick="simulatePdfUpload()">העלה קובץ PDF לדוגמה</button>
+        </div>
+        <div id="uploadStatusText" style="margin-top:14px;padding:12px 16px;background:var(--footer-bg);border:1px solid var(--border-hairline);border-radius:8px;font-size:14.5px;color:var(--text-body);">
+          מוכן להעלאה מוצפנת ב־KMS · אפס עומס על שרתי ECS
+        </div>
+        <div class="pipe-grid">
+          <div class="pipe-box" id="pipe-1">1. S3 Presigned URL<br/><small>העלאה ישירה + KMS</small></div>
+          <div class="pipe-box" id="pipe-2">2. Lambda + GuardDuty<br/><small>סריקת נוזקות ו־OCR</small></div>
+          <div class="pipe-box" id="pipe-3">3. AWS SQS FIFO<br/><small>תור מוגן + DLQ</small></div>
+          <div class="pipe-box" id="pipe-4">4. Direct Connect 1G<br/><small>מיינפריים ירושלים</small></div>
+        </div>
+      </div>
+
+      <!-- Estonia-style Transparent Audit Ledger -->
+      <div class="clean-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+          <div>
+            <h3 style="font-size:22px;font-weight:600;">מי צפה בנתונים שלי? (יומן שקיפות בלתי ניתן למחיקה)</h3>
+            <p style="font-size:15px;color:var(--text-body);margin-top:4px;">מתועד אוטומטית ב־AWS CloudTrail + S3 Object Lock בחשבון האבטחה המבודד.</p>
+          </div>
+          <span class="pill-status">WORM · Compliance Lock</span>
+        </div>
+        <table class="audit-table">
+          <thead>
+            <tr><th>תאריך ושעה</th><th>גורם שניגש לתיק</th><th>פעולה</th><th>מקור אימות</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>20/11/2026 19:22</td><td>מערכת סנכרון צה״ל (אוטומטי)</td><td>אימות ימי מילואים</td><td><span class="cloud-tag tag-aws">IAM OIDC</span></td></tr>
+            <tr><td>18/11/2026 11:04</td><td>פקידת תביעות — סניף חולון</td><td>צפייה באישור תקופות ביטוח</td><td><span class="cloud-tag tag-azure">Entra ID PIM</span></td></tr>
+            <tr><td>15/11/2026 03:00</td><td>מנוע מניעת הונאות (אנונימי)</td><td>בדיקת כפילות תקינה</td><td><span class="cloud-tag tag-gcp">GCP BigQuery ML</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== VIEW 3: LIVE 4-LAYER HYBRID CLOUD SIMULATOR ==================== -->
+  <main id="view-cloud" class="view-panel">
+    <div class="subview-hero">
+      <div class="subview-inner">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;">
+          <div>
+            <h1 class="sec-h2" style="font-size:32px;line-height:40px;">חדר מצב ענן היברידי — 4 שכבות (75,000 ₪ / חודש)</h1>
+            <p style="font-size:16px;color:var(--text-body);margin-top:6px;">פילוח עננים: 80% אמזון (תל אביב) · 15% גוגל (תל אביב) · 5% מיקרוסופט (זהויות וניטור אבטחה) · רזרבת חירום של 25,000 ₪</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <span id="sloBadge" class="pill-status ok" dir="ltr" style="font-family:'JetBrains Mono',monospace;">99.99% HEALTHY</span>
+            <button class="btn-header-cta" onclick="switchView('home')">חזרה לדף הבית</button>
+          </div>
+        </div>
+        <div class="ratio-bar">
+          <div style="width:80%;background:#FF9900;"></div>
+          <div style="width:15%;background:#4285F4;"></div>
+          <div style="width:5%;background:#0EA5E9;"></div>
+        </div>
+        <div class="chaos-row">
+          <button class="chaos-btn active" data-mode="normal" onclick="runChaos('normal', this)">שגרה (Normal)</button>
+          <button class="chaos-btn" data-mode="spike" onclick="runChaos('spike', this)">ה־28 לחודש (פי 10 עומס)</button>
+          <button class="chaos-btn" data-mode="ddos" onclick="runChaos('ddos', this)">מתקפת DDoS איראנית (12M/s)</button>
+          <button class="chaos-btn" data-mode="az" onclick="runChaos('az', this)">הפלת אזור תל אביב (Kill AZ-1)</button>
+          <button class="chaos-btn" data-mode="mainframe" onclick="runChaos('mainframe', this)">ניתוק מיינפריים ירושלים (2h)</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-section">
+      <div class="grid-5" style="margin-bottom:24px;">
+        <div class="clean-card" style="padding:18px;"><div style="font-size:13px;color:var(--text-body);">זמן טעינה P95</div><div id="t-latency" style="font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace;direction:ltr;text-align:right;margin:4px 0;">118ms</div><div id="t-latency-note" style="font-size:12.5px;color:#15803D;">מול 2,443ms ב־SharePoint</div></div>
+        <div class="clean-card" style="padding:18px;"><div style="font-size:13px;color:var(--text-body);">CloudFront Cache Hit</div><div id="t-cache" style="font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace;direction:ltr;text-align:right;margin:4px 0;">93.4%</div><div id="t-cache-note" style="font-size:12.5px;color:#15803D;">מול 0% באתר הישן</div></div>
+        <div class="clean-card" style="padding:18px;"><div style="font-size:13px;color:var(--text-body);">ECS Fargate Tasks</div><div id="t-ecs" style="font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace;direction:ltr;text-align:right;margin:4px 0;">6 Tasks</div><div id="t-ecs-note" style="font-size:12.5px;color:var(--btl-link);">ARM64 Graviton · 3 AZs</div></div>
+        <div class="clean-card" style="padding:18px;"><div style="font-size:13px;color:var(--text-body);">SQS FIFO Buffer</div><div id="t-sqs" style="font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace;direction:ltr;text-align:right;margin:4px 0;">14 msgs</div><div id="t-sqs-note" style="font-size:12.5px;color:#15803D;">0 תביעות אבודות</div></div>
+        <div class="clean-card" style="padding:18px;"><div style="font-size:13px;color:var(--text-body);">עלות חודשית חזויה</div><div id="t-cost" style="font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace;direction:ltr;text-align:right;margin:4px 0;">₪75,000</div><div id="t-cost-note" style="font-size:12.5px;color:#15803D;">25,000 ₪ מתחת לתקרה</div></div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div class="clean-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <strong style="font-size:18px;">שכבה 1 — שלד, זהויות, הצפנה ואבטחה</strong>
+            <span class="pill-status">5,000 ₪/חודש</span>
+          </div>
+          <div class="svc-row"><span>Organizations + Control Tower + 6 Accounts + SCPs</span><span class="cloud-tag tag-aws">AWS · 0 ₪</span></div>
+          <div class="svc-row"><span>Multi-AZ Active (3 AZs) + Cold DR Archive Backup</span><span class="cloud-tag tag-gcp">GCP · 400 ₪</span></div>
+          <div class="svc-row"><span>CloudTrail + S3 Object Lock (WORM) + GuardDuty</span><span class="cloud-tag tag-aws">AWS · 2,000 ₪</span></div>
+          <div class="svc-row"><span>Entra ID + PIM JIT + Microsoft Sentinel Unified SOC</span><span class="cloud-tag tag-azure">Azure · 2,000 ₪</span></div>
+          <div class="svc-row"><span>KMS (CMK) + Secrets Manager + Budgets + GCP KMS</span><span class="cloud-tag tag-aws">AWS · 600 ₪</span></div>
+        </div>
+
+        <div class="clean-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <strong style="font-size:18px;">שכבה 2 — רשתות, הגנת קצה וחיבור ירושלים</strong>
+            <span class="pill-status">18,750 ₪/חודש</span>
+          </div>
+          <div class="svc-row"><span>Route 53 (100% SLA + Alias + DNSSEC + Resolver)</span><span class="cloud-tag tag-aws">AWS · 250 ₪</span></div>
+          <div class="svc-row"><span>CloudFront Tel Aviv Edge (HTTP/3 + Brotli + OAC)</span><span class="cloud-tag tag-aws">AWS · 1,800 ₪</span></div>
+          <div class="svc-row"><span>Shield Advanced + FREE WAF + Firewall Manager</span><span class="cloud-tag tag-aws">AWS · 11,000 ₪</span></div>
+          <div class="svc-row"><span>3-Tier VPC + Transit Gateway + Free S3 Endpoints</span><span class="cloud-tag tag-aws">AWS · 2,450 ₪</span></div>
+          <div class="svc-row"><span>Direct Connect 1G + HA VPN (Jerusalem &amp; GCP)</span><span class="cloud-tag tag-aws">AWS · 3,250 ₪</span></div>
+        </div>
+
+        <div class="clean-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <strong style="font-size:18px;">שכבה 3 — מחשוב, סרברלס ו־CI/CD</strong>
+            <span class="pill-status">16,750 ₪/חודש</span>
+          </div>
+          <div class="svc-row"><span>Static Portal on S3 + Headless CMS (Killed SharePoint)</span><span class="cloud-tag tag-aws">AWS · 600 ₪</span></div>
+          <div class="svc-row"><span>ECS Fargate (ARM64 Graviton .NET Core + /chat WS)</span><span class="cloud-tag tag-aws">AWS · 14,000 ₪</span></div>
+          <div class="svc-row"><span>S3 Presigned + Lambda + SQS FIFO/DLQ + Step Functions</span><span class="cloud-tag tag-aws">AWS · 1,200 ₪</span></div>
+          <div class="svc-row"><span>Terraform (3 Clouds) + GitHub OIDC + ECR + Blue/Green</span><span class="cloud-tag tag-aws">AWS · 950 ₪</span></div>
+        </div>
+
+        <div class="clean-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <strong style="font-size:18px;">שכבה 4 — נתונים, אנליטיקת GCP וניטור</strong>
+            <span class="pill-status">34,500 ₪/חודש</span>
+          </div>
+          <div class="svc-row"><span>Aurora PostgreSQL (3-AZ + RDS Proxy) + ElastiCache Valkey</span><span class="cloud-tag tag-aws">AWS · 17,500 ₪</span></div>
+          <div class="svc-row"><span>S3 Citizen Vault + GuardDuty Scan + Glacier Deep Archive</span><span class="cloud-tag tag-aws">AWS · 3,000 ₪</span></div>
+          <div class="svc-row"><span>BigQuery Serverless + BigQuery ML / Vertex Fraud AI</span><span class="cloud-tag tag-gcp">GCP · 8,500 ₪</span></div>
+          <div class="svc-row"><span>CloudWatch + Synthetics + OpenTelemetry + Managed Grafana</span><span class="cloud-tag tag-aws">AWS · 5,500 ₪</span></div>
+        </div>
+      </div>
+
+      <div class="clean-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <strong style="font-size:17px;">Amazon Managed Grafana + OpenTelemetry Live Stream</strong>
+          <span class="pill-status ok" id="streamStatus">LIVE · 3 Clouds Synced</span>
+        </div>
+        <div class="live-terminal" id="liveLog">
+          <div>[OK] AWS Route 53 (il-central-1) health checks passing 100% across Tel Aviv AZ-1, AZ-2, AZ-3.</div>
+          <div>[EDGE] AWS CloudFront Tel Aviv POP serving static portal at 24ms TTFB (93.4% cache hit ratio).</div>
+          <div>[DATA] ElastiCache Valkey absorbing 86% of /personal reads in 0.8ms; Aurora RDS Proxy steady.</div>
+          <div>[HYBRID] GCP BigQuery (me-west1) + Azure Sentinel SOC synced with 0 active alerts.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== 8. FOOTER (EXACT 369px, #F9F9F9, 4 COLUMNS + 64px LEGAL BAR) ==================== -->
+  <footer class="site-footer" id="btl-footer">
+    <div class="footer-top">
+      <div class="footer-brand-block">
+        <div class="footer-stacked-logo">ביטוח<span>לאומי</span></div>
+        <div class="footer-vdivider"></div>
+        <div class="footer-powered">
+          <span>מופעל ע״י</span>
+          <div class="footer-powered-agency">
+            <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+              <polygon points="14,2 25,8.5 25,19.5 14,26 3,19.5 3,8.5" stroke="#0368B0" stroke-width="2" fill="#EBF5FC"/>
+              <circle cx="14" cy="14" r="4" fill="#005D93"/>
+            </svg>
+            <span>מערך הדיגיטל<br/>ונימבוס ישראל</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <button class="footer-link" onclick="switchView('home')">דף הבית</button>
+        <button class="footer-link" onclick="switchView('home', 'moments-section')">רגעי חיים</button>
+        <button class="footer-link" onclick="switchView('home', 'topics-section')">נושאים</button>
+        <button class="footer-link" onclick="switchView('personal')">האזור האישי</button>
+      </div>
+
+      <div class="footer-col">
+        <button class="footer-link" onclick="openServiceModal('אודות המוסד לביטוח לאומי', 'המוסד לביטוח לאומי פועל להבטחת הביטחון הסוציאלי של תושבי ישראל בתשתית ענן מאובטחת ומתקדמת.')">אודותינו</button>
+        <button class="footer-link" onclick="openServiceModal('שאלות נפוצות', 'תשובות מהירות בנושא תגמול מילואים, דמי אבטלה, מענק לידה וקצבאות.')">שאלות נפוצות ↗</button>
+        <button class="footer-link" onclick="openServiceModal('יצירת קשר ומוקד *6050', 'מוקד טלפוני *6050, זימון תור דיגיטלי וצ׳אט מאובטח עם נציג.')">צור קשר ↗</button>
+        <button class="footer-link" onclick="switchView('cloud')" style="color:var(--btl-link);font-weight:600;">חדר מצב ענן (4 שכבות) ↗</button>
+      </div>
+
+      <div>
+        <div class="footer-app-title">הורידו את האפליקציה</div>
+        <div class="store-badges">
+          <a class="store-badge" href="#appstore" onclick="event.preventDefault(); openServiceModal('אפליקציית ביטוח לאומי ל־iOS', 'גישה ביומטרית מאובטחת לאזור האישי, התראות תשלום והעלאת מסמכים מהמצלמה.');">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.33c.64-.78 1.08-1.86.96-2.94-.93.04-2.06.62-2.72 1.4-.58.68-1.1 1.79-.96 2.84 1.04.08 2.08-.52 2.72-1.3z"/></svg>
+            <div><span class="store-badge-sub">Download on the</span><span class="store-badge-main">App Store</span></div>
+          </a>
+          <a class="store-badge" href="#googleplay" onclick="event.preventDefault(); openServiceModal('אפליקציית ביטוח לאומי ל־Android', 'גישה מהירה לקצבאות, העלאת מסמכים ישירות ל־S3 ומעקב תביעות בזמן אמת.');">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a1.5 1.5 0 0 1-.61-1.208V3.022c0-.49.238-.925.609-1.208zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>
+            <div><span class="store-badge-sub">GET IT ON</span><span class="store-badge-main">Google Play</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-wrap">
+      <div class="footer-bottom">
+        <div class="footer-legal-links">
+          <button onclick="openServiceModal('הצהרת פרטיות', 'כל המידע האישי מאוחסן בישראל בלבד (AWS il-central-1 + גיבוי GCP me-west1) תחת הצפנת KMS מלאה.')">הצהרת פרטיות</button>
+          <button onclick="openServiceModal('תנאי שימוש', 'השימוש בשירותי הפורטל כפוף להוראות חוק הביטוח הלאומי ותקני אבטחת המידע הממשלתיים.')">תנאי שימוש</button>
+          <button onclick="openServiceModal('דיווח על פגיעות אבטחה', 'ניתן לדווח על כל פגיעות אבטחה ישירות למערך הסייבר הלאומי ולצוות ה־SOC של ביטוח לאומי.')">דיווח על פגיעות אבטחה ↗</button>
+        </div>
+        <div>© 2026 המוסד לביטוח לאומי, מדינת ישראל. עודכן לאחרונה 20 בנובמבר 2026</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 9. FLOATING CORNER WIDGET (1:1 LifeSG Bottom-Corner Circular Widget -> Opens Live 4-Layer Cloud Simulator) -->
+  <button class="floating-widget-btn" id="cloudWidgetBtn" title="חדר מצב ענן היברידי (4 שכבות · 75,000 ₪)" aria-label="פתח חדר מצב ענן" onclick="switchView('cloud')">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+  </button>
+
+  <!-- Clean Modal -->
+  <div class="modal-backdrop" id="serviceModal" onclick="if(event.target===this) closeModal()">
+    <div class="modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h3 id="modalTitle" style="font-size:22px;font-weight:700;color:var(--text-primary);">כותרת</h3>
+        <button onclick="closeModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-body);" aria-label="סגור">✕</button>
+      </div>
+      <p id="modalDesc" style="font-size:16px;line-height:24px;color:var(--text-body);margin-bottom:20px;"></p>
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button class="btn-header-cta" onclick="closeModal()">סגור</button>
+        <button class="btn-header-cta" style="background:var(--btl-link);color:#FFF;border-color:var(--btl-link);" onclick="closeModal(); switchView('personal', 'upload-card');">המשך לאזור האישי</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. Masthead identify drawer
+    const identifyBtn = document.getElementById('identifyBtn');
+    const identifyDrawer = document.getElementById('identifyDrawer');
+    identifyBtn.addEventListener('click', () => {
+      const isOpen = identifyDrawer.classList.toggle('open');
+      identifyBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // 2. Navbar dropdowns (Life moments & Topics)
+    function closeDropdowns() {
+      document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+      document.querySelectorAll('.nav-link[aria-expanded]').forEach(b => b.setAttribute('aria-expanded', 'false'));
+    }
+    function toggleDropdown(id, btn) {
+      const dd = document.getElementById(id);
+      const willOpen = !dd.classList.contains('open');
+      closeDropdowns();
+      if (willOpen) {
+        dd.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav-item-wrap')) closeDropdowns();
+    });
+
+    // 3. View switching
+    function switchView(viewName, scrollToId) {
+      closeDropdowns();
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('view-' + viewName).classList.add('active');
+      document.getElementById('nav-home').classList.toggle('active', viewName === 'home');
+      if (scrollToId) {
+        setTimeout(() => document.getElementById(scrollToId)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 40);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function focusHeroSearch() {
+      switchView('home');
+      setTimeout(() => document.getElementById('heroSearchInput')?.focus(), 80);
+    }
+
+    function filterHomepage(q) {
+      const term = (q || '').trim().toLowerCase();
+      document.querySelectorAll('.popular-item, .moment-card, .topic-item').forEach(el => {
+        el.style.display = !term || el.innerText.toLowerCase().includes(term) ? '' : 'none';
+      });
+    }
+
+    function executeSearch() {
+      const val = document.getElementById('heroSearchInput').value.trim();
+      filterHomepage(val);
+      if (val) document.getElementById('popular-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function openServiceModal(title, desc) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDesc').textContent = desc;
+      document.getElementById('serviceModal').classList.add('open');
+    }
+    function closeModal() {
+      document.getElementById('serviceModal').classList.remove('open');
+    }
+
+    // 4. Live AWS 3.3 PDF Upload Pipeline Simulator
+    function simulatePdfUpload() {
+      const steps = ['pipe-1', 'pipe-2', 'pipe-3', 'pipe-4'];
+      const msgs = [
+        'מעלה miluim_claim_2026.pdf ישירות ל־S3 Presigned URL מוצפן ב־KMS...',
+        'AWS Lambda + GuardDuty סורקים נוזקות ומפענחים OCR ב־320ms...',
+        'התביעה ננעלה ב־AWS SQS FIFO (הגנה מלאה מפני אובדן נתונים)...',
+        'הושלם בהצלחה: Step Functions סנכרן את התביעה דרך Direct Connect 1G למיינפריים בירושלים.'
+      ];
+      steps.forEach(id => document.getElementById(id).className = 'pipe-box');
+      const status = document.getElementById('uploadStatusText');
+      steps.forEach((id, i) => {
+        setTimeout(() => {
+          if (i > 0) document.getElementById(steps[i - 1]).className = 'pipe-box done';
+          document.getElementById(id).className = i === steps.length - 1 ? 'pipe-box done' : 'pipe-box running';
+          status.textContent = msgs[i];
+        }, i * 600);
+      });
+    }
+
+    // 5. Live 4-Layer Cloud Chaos Simulator
+    const scenarios = {
+      normal: {
+        slo: '99.99% HEALTHY', latency: '118ms', latNote: 'מול 2,443ms ב־SharePoint',
+        cache: '93.4%', cacheNote: 'Tel Aviv Edge POP', ecs: '6 Tasks', ecsNote: 'ARM64 Graviton · 3 AZs',
+        sqs: '14 msgs', sqsNote: '0 תביעות אבודות', cost: '₪75,000', costNote: '25,000 ₪ רזרבת חירום',
+        stream: 'LIVE · 3 Clouds Synced',
+        logs: [
+          '[OK] AWS Route 53 (il-central-1) health checks passing 100% across Tel Aviv AZ-1, AZ-2, AZ-3.',
+          '[EDGE] AWS CloudFront Tel Aviv POP serving static portal at 24ms TTFB (93.4% cache hit).',
+          '[DATA] ElastiCache Valkey absorbing 86% of /personal reads in 0.8ms; Aurora RDS Proxy steady.',
+          '[HYBRID] GCP BigQuery (me-west1) + Azure Sentinel SOC synced with 0 active alerts.'
+        ]
+      },
+      spike: {
+        slo: '99.99% AUTO-SCALED', latency: '134ms', latNote: 'יציב גם בפי 10 עומס',
+        cache: '96.8%', cacheNote: '96.8% נספגים בקצה', ecs: '38 Tasks', ecsNote: 'Auto-scaled in 18s',
+        sqs: '4,820 msgs', sqsNote: 'מגן על המיינפריים בירושלים', cost: '₪81,400', costNote: 'בתוך רזרבת ה־25,000 ₪',
+        stream: '28TH ALLOWANCE DAY · 10X TRAFFIC',
+        logs: [
+          '[SPIKE] 28th allowance day surge: 420,000 concurrent citizens online.',
+          '[CDN] CloudFront Tel Aviv absorbing 96.8% of public portal traffic from S3 OAC.',
+          '[SCALE] ECS Fargate scaled 6 -> 38 ARM64 Graviton tasks across 3 AZs in 18s.',
+          '[DB] RDS Proxy multiplexing 18,400 app connections safely onto Aurora PostgreSQL.'
+        ]
+      },
+      ddos: {
+        slo: '99.99% SHIELDED', latency: '126ms', latNote: 'האזרחים לא הרגישו כלום',
+        cache: '94.1%', cacheNote: 'Origin Cloaking פעיל', ecs: '8 Tasks', ecsNote: '0% תקיפה הגיעה ל־ECS',
+        sqs: '19 msgs', sqsNote: 'תור נקי', cost: '₪75,000', costNote: '0 ₪ קנס (Shield Refund)',
+        stream: 'ATTACK MITIGATED · SHIELD ADVANCED',
+        logs: [
+          '[ALERT] 12,400,000 req/sec DDoS targeting btl.gov.il & /chat blocked at CloudFront Edge.',
+          '[SHIELD] AWS Shield Advanced + WAF dropped 99.98%; AWS SRT engaged automatically.',
+          '[SOC] High-signal alert forwarded to Azure Microsoft Sentinel in 1.4s.',
+          '[FINOPS] Shield Advanced DDoS Cost Protection active: 100% spike refunded (₪0 extra).'
+        ]
+      },
+      az: {
+        slo: '99.99% FAILOVER OK', latency: '141ms', latNote: 'מעבר אוטומטי תוך 9 שניות',
+        cache: '93.1%', cacheNote: 'Edge לא הושפע', ecs: '12 Tasks', ecsNote: 'הועבר ל־AZ-2 ו־AZ-3',
+        sqs: '31 msgs', sqsNote: 'ללא אובדן הודעות', cost: '₪75,000', costNote: 'Multi-AZ כלול בתקציב',
+        stream: 'AZ-1 DOWN · RUNNING ON AZ-2 + AZ-3',
+        logs: [
+          '[CHAOS] Simulated Tel Aviv AZ-1 outage — power & fiber offline.',
+          '[NET] ALB + Transit Gateway drained AZ-1 in <3s; traffic shifted to AZ-2 & AZ-3.',
+          '[DB] Aurora PostgreSQL (6 copies) promoted AZ-2 Reader; RDS Proxy cut failover to 9s.',
+          '[DR] Nightly encrypted Cold DR snapshot verified intact in GCP me-west1.'
+        ]
+      },
+      mainframe: {
+        slo: '99.99% BUFFERED', latency: '119ms', latNote: '0 שגיאות לאזרחים באתר',
+        cache: '93.5%', cacheNote: 'קריאות היסטוריות זמינות', ecs: '8 Tasks', ecsNote: 'אתר עובד 100% רגיל',
+        sqs: '14,280 msgs', sqsNote: 'ממתינים בטוח ב־SQS FIFO', cost: '₪75,150', costNote: 'תוספת אגורות ב־SQS',
+        stream: 'JERUSALEM HQ OFFLINE · SQS PROTECTING',
+        logs: [
+          '[HYBRID] Jerusalem HQ Mainframe offline 2h for maintenance (Direct Connect BGP down).',
+          '[BUFFER] Citizens keep submitting PDFs smoothly via S3 Presigned -> Lambda -> SQS FIFO.',
+          '[QUEUE] 14,280 claims safely queued in KMS-encrypted SQS FIFO (0 dropped forms).',
+          '[RECOVERY] Step Functions ready to drain at safe 120 req/sec once Mainframe reconnects.'
+        ]
+      }
+    };
+
+    function runChaos(mode, btn) {
+      document.querySelectorAll('.chaos-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const s = scenarios[mode];
+      document.getElementById('sloBadge').textContent = s.slo;
+      document.getElementById('t-latency').textContent = s.latency;
+      document.getElementById('t-latency-note').textContent = s.latNote;
+      document.getElementById('t-cache').textContent = s.cache;
+      document.getElementById('t-cache-note').textContent = s.cacheNote;
+      document.getElementById('t-ecs').textContent = s.ecs;
+      document.getElementById('t-ecs-note').textContent = s.ecsNote;
+      document.getElementById('t-sqs').textContent = s.sqs;
+      document.getElementById('t-sqs-note').textContent = s.sqsNote;
+      document.getElementById('t-cost').textContent = s.cost;
+      document.getElementById('t-cost-note').textContent = s.costNote;
+      document.getElementById('streamStatus').textContent = s.stream;
+      document.getElementById('liveLog').innerHTML = s.logs.map(l => `<div>${l}</div>`).join('');
+    }
+  </script>
+</body>
+</html>
